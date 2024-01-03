@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TodoList from './Components/TodoList/TodoList';
@@ -12,8 +12,11 @@ function App() {
     { id: 3, title: 'test3', isDone: true}
   ]
 
+  const [task, setTask] = useState(todos)
+
   const removeTodo = (id: number) => {
-    const resultTodo = todos.filter(() => {})
+    const filterTodo = task.filter( t => t.id !== id)
+    setTask(filterTodo)
   }
 
   return (
@@ -21,7 +24,7 @@ function App() {
       {/* <TodoList title='What is done' />
       <TodoList title='In progress' />
       <TodoList title='What needs to be done' /> */}
-      <Todo title="what to learn?" tasks={todos} removeTodo={removeTodo}/>
+      <Todo title="what to learn?" tasks={task} removeTodo={removeTodo}/>
       
     </div>
   );
