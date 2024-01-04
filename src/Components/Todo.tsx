@@ -1,10 +1,10 @@
-import { FormEvent, useRef, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { FilterValuesType } from "../App"
 
 
 
 export type TaskType = {
-  id: number
+  id: string
   text: string
   isDone: boolean
 }
@@ -12,36 +12,44 @@ export type TaskType = {
 type PropsType = {
   title: string
   tasks: Array<TaskType>
-  removeTodo: (id: number) => void
+  removeTodo: (id: string) => void
   changeFilter: (value: FilterValuesType) => void
-  addTodo: () => void
-  setInput: any
-  input: string
-}
+  addTodo: (input: string) => void
 
+}
 
 
 
 export function Todo(props: PropsType) {
 
 
-  // const [todos, setTodos] = useState<Itodo[]>([userTest])
-  const [checkbox, setCheckbox] = useState(true)
+
+  const [checkbox, setCheckbox] = useState(false)
+  const [input, setInput] = useState<string>('')
 
   const hundlerSubmit = (e: FormEvent) => {
     e.preventDefault()
-    props.setInput('')
+    setInput('')
+  }
 
+  const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
+
+  const onChangeCheckboxHandler = () => {
+    setCheckbox((state) => !state)
   }
 
   return (
     <form onSubmit={hundlerSubmit}>
-      <input type="text" placeholder="What title?" value={props.input} onChange={e => props.setInput(e.target.value)} />
-      <button onClick={() => props.addTodo()}>+</button>
+      <input type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
+      <button onClick={() => props.addTodo(input)}>+</button>
       <h3>{props.title}</h3>
       <ul>
         {props.tasks.map(t => <li>
-          <input type="checkbox" defaultChecked={checkbox}  onChange={() => setCheckbox((state) => !state)} /> <span>{t.text}</span><button onClick={() => { props.removeTodo(t.id) }}>x</button>
+          <input type="checkbox" defaultChecked={checkbox} onChange={onChangeCheckboxHandler} />
+          <span>{t.text}</span>
+          <button onClick={() => { props.removeTodo(t.id) }}>x</button>
         </li>)}
 
       </ul>

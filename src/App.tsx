@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import TodoList from './Components/TodoList/TodoList';
 import { TaskType, Todo } from './Components/Todo';
-import { text } from 'stream/consumers';
+import { v1 } from 'uuid';
 
 
 
@@ -10,26 +9,30 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function App() {
   const todos = [
-    { id: 1, text: 'test1', isDone: true },
-    { id: 2, text: 'test2', isDone: false },
-    { id: 3, text: 'test3', isDone: true }
+    { id: v1(), text: 'test1', isDone: true },
+    { id: v1(), text: 'test2', isDone: false },
+    { id: v1(), text: 'test3', isDone: true }
   ]
 
   const [task, setTask] = useState<Array<TaskType>>(todos)
   const [filter, setFilter] = useState<FilterValuesType>('all')
-  const [input, setInput] = useState<string>('')
+ 
 
-  const addTodo = () => {
+  const addTodo = (input: string) => {
 
-    const newTodo = {
+    const newTodo: TaskType = {
       text: input,
       isDone: false,
-      id: Date.now()
+      id: Date.now().toString()
     }
-    setTask([...task, newTodo])
+
+    if(input.length !== 0) {
+      setTask([newTodo, ...task])
+    }
+    
     
   }
-  const removeTodo = (id: number) => {
+  const removeTodo = (id: string) => {
     setTask(prev => prev.filter(todo => todo.id !== id))
   }
 
@@ -47,7 +50,7 @@ function App() {
 
   return (
     <div className="App">
-      <Todo title="what to learn?" tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} input={input} setInput={setInput}/>
+      <Todo title="what to learn?" tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} />
     </div>
   );
 }
