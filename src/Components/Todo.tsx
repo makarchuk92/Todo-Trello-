@@ -15,7 +15,7 @@ type PropsType = {
   removeTodo: (id: string) => void
   changeFilter: (value: FilterValuesType) => void
   addTodo: (input: string) => void
-
+  changeCheckStatus: (taskId: string, isDone: boolean) => void
 }
 
 
@@ -36,9 +36,7 @@ export function Todo(props: PropsType) {
     setInput(e.target.value)
   }
 
-  const onChangeCheckboxHandler = () => {
-    setCheckbox((state) => !state)
-  }
+
 
   return (
     <form onSubmit={hundlerSubmit}>
@@ -46,11 +44,19 @@ export function Todo(props: PropsType) {
       <button onClick={() => props.addTodo(input)}>+</button>
       <h3>{props.title}</h3>
       <ul>
-        {props.tasks.map(t => <li>
-          <input type="checkbox" defaultChecked={checkbox} onChange={onChangeCheckboxHandler} />
+        {props.tasks.map(t => {
+            const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+              // setCheckbox((state) => !state)
+              props.changeCheckStatus(t.id, e.target.checked)
+            }
+          return <li key={t.id}>
+          <input type="checkbox" checked={t.isDone} onChange={onChangeCheckboxHandler} />
           <span>{t.text}</span>
           <button onClick={() => { props.removeTodo(t.id) }}>x</button>
-        </li>)}
+        </li>
+        }
+          
+          )}
 
       </ul>
       <div>
