@@ -22,31 +22,39 @@ type PropsType = {
 
 export function Todo(props: PropsType) {
 
-
-
-  const [checkbox, setCheckbox] = useState(false)
   const [input, setInput] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
 
-  const hundlerSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setInput('')
+ 
+
+  const addTask = () => {
+    if(input.trim() !== "") {
+      props.addTodo(input.trim())
+      setInput('')
+    } else {
+      setError('Field is required')
+    }
+    
   }
 
   const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
+    setError(null)
+    // const inputElement: HTMLElement | null = document.getElementById('text-input')
+    // inputElement?.classList.remove('error-input')
   }
 
 
 
   return (
-    <form onSubmit={hundlerSubmit}>
-      <input type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
-      <button onClick={() => props.addTodo(input)}>+</button>
+    <div>
+      <input id="text-input" className={error ? "error-input" : ""} type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
+      <button onClick={() => addTask()}>+</button>
+      {error && <div className="text-input">{error}</div>}
       <h3>{props.title}</h3>
       <ul>
         {props.tasks.map(t => {
             const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-              // setCheckbox((state) => !state)
               props.changeCheckStatus(t.id, e.target.checked)
             }
           return <li key={t.id}>
@@ -64,7 +72,7 @@ export function Todo(props: PropsType) {
         <button onClick={() => props.changeFilter('active')}>Active</button>
         <button onClick={() => props.changeFilter('completed')}>Completed</button>
       </div>
-    </form>
+    </div>
   )
 }
 

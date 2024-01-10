@@ -17,6 +17,7 @@ function App() {
   const [task, setTask] = useState<Array<TaskType>>(todos)
   const [filter, setFilter] = useState<FilterValuesType>('all')
  
+ 
 
   const addTodo = (input: string) => {
 
@@ -26,9 +27,12 @@ function App() {
       id: Date.now().toString()
     }
 
-    if(input.length !== 0) {
+    
       setTask([newTodo, ...task])
-    }
+     //else{
+    //   const element: HTMLElement | null = document.getElementById('text-input')
+    //   element?.classList.add('error-input')
+    // }
     
     
   }
