@@ -24,3 +24,7 @@ code {
   background-color: aqua; 
   border-color: rgb(42, 136, 165);
 }
+
+.is-done {
+  opacity: 50%;
+}
