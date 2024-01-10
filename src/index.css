@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.error-input {
+  border: 1px solid red;
+}
+
+.text-input {
+  color: red;
+}
+
+.active-filter {
+  background-color: aqua; 
+  border-color: rgb(42, 136, 165);
+}
+
+.is-done {
+  opacity: 50%;
+}

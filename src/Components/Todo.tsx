@@ -15,50 +15,65 @@ type PropsType = {
   removeTodo: (id: string) => void
   changeFilter: (value: FilterValuesType) => void
   addTodo: (input: string) => void
-
+  changeCheckStatus: (taskId: string, isDone: boolean) => void
+  filter: FilterValuesType
 }
 
 
 
 export function Todo(props: PropsType) {
 
-
-
-  const [checkbox, setCheckbox] = useState(false)
   const [input, setInput] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
 
-  const hundlerSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setInput('')
+ 
+
+  const addTask = () => {
+    if(input.trim() !== "") {
+      props.addTodo(input.trim())
+      setInput('')
+    } else {
+      setError('Field is required')
+    }
+    
   }
 
   const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
+    setError(null)
+    // const inputElement: HTMLElement | null = document.getElementById('text-input')
+    // inputElement?.classList.remove('error-input')
   }
 
-  const onChangeCheckboxHandler = () => {
-    setCheckbox((state) => !state)
-  }
+
 
   return (
-    <form onSubmit={hundlerSubmit}>
-      <input type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
-      <button onClick={() => props.addTodo(input)}>+</button>
+    <div>
+      <input id="text-input" className={error ? "error-input" : ""} type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
+      <button onClick={() => addTask()}>+</button>
+      {error && <div className="text-input">{error}</div>}
       <h3>{props.title}</h3>
       <ul>
-        {props.tasks.map(t => <li>
-          <input type="checkbox" defaultChecked={checkbox} onChange={onChangeCheckboxHandler} />
+        {props.tasks.map(t => {
+            const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+              props.changeCheckStatus(t.id, e.target.checked)
+            }
+          return <li key={t.id} className={t.isDone ? "is-done" : ''} >
+          <input type="checkbox" checked={t.isDone} onChange={onChangeCheckboxHandler} />
           <span>{t.text}</span>
           <button onClick={() => { props.removeTodo(t.id) }}>x</button>
-        </li>)}
+        </li>
+        }
+          
+          )}
 
       </ul>
       <div>
-        <button onClick={() => props.changeFilter('all')}>All</button>
-        <button onClick={() => props.changeFilter('active')}>Active</button>
-        <button onClick={() => props.changeFilter('completed')}>Completed</button>
+        <button className={props.filter == 'all' ? "active-filter" : ""} onClick={() => props.changeFilter('all')}>All</button>
+        <button className={props.filter == 'active' ? "active-filter" : ""} onClick={() => props.changeFilter('active')}>Active</button>
+        <button className={props.filter == 'completed' ? "active-filter" : ""} onClick={() => props.changeFilter('completed')}>Completed</button>
       </div>
-    </form>
+    </div>
   )
 }
 
