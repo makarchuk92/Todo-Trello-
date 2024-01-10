@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="App">
       <Todo title="what to learn?"
-       tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus}
+       tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus} filter={filter}
         />
     </div>
   );

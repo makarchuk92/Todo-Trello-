@@ -19,3 +19,8 @@ code {
 .text-input {
   color: red;
 }
+
+.active-filter {
+  background-color: aqua; 
+  border-color: rgb(42, 136, 165);
+}

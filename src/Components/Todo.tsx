@@ -16,6 +16,7 @@ type PropsType = {
   changeFilter: (value: FilterValuesType) => void
   addTodo: (input: string) => void
   changeCheckStatus: (taskId: string, isDone: boolean) => void
+  filter: FilterValuesType
 }
 
 
@@ -68,9 +69,9 @@ export function Todo(props: PropsType) {
 
       </ul>
       <div>
-        <button onClick={() => props.changeFilter('all')}>All</button>
-        <button onClick={() => props.changeFilter('active')}>Active</button>
-        <button onClick={() => props.changeFilter('completed')}>Completed</button>
+        <button className={props.filter == 'all' ? "active-filter" : ""} onClick={() => props.changeFilter('all')}>All</button>
+        <button className={props.filter == 'active' ? "active-filter" : ""} onClick={() => props.changeFilter('active')}>Active</button>
+        <button className={props.filter == 'completed' ? "active-filter" : ""} onClick={() => props.changeFilter('completed')}>Completed</button>
       </div>
     </div>
   )
