@@ -6,6 +6,11 @@ import { v1 } from 'uuid';
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
+type todoListsType = {
+  id: string
+  title: string
+  filter: FilterValuesType
+}
 
 function App() {
   const todos = [
@@ -14,9 +19,13 @@ function App() {
     { id: v1(), text: 'test3', isDone: true }
   ]
 
+
   const [task, setTask] = useState<Array<TaskType>>(todos)
-  const [filter, setFilter] = useState<FilterValuesType>('all')
- 
+
+  const [todoLists, setTodoLists] = useState <Array<todoListsType>>([
+    {id: v1(), title: 'What to learn', filter: 'active'},
+    {id: v1(), title: 'What to buy', filter: 'active'}
+  ]) 
  
 
   const addTodo = (input: string) => {
@@ -40,8 +49,12 @@ function App() {
     setTask(prev => prev.filter(todo => todo.id !== id))
   }
 
-  const changeFilter = (value: FilterValuesType) => {
-    setFilter(value)
+  const changeFilter = (value: FilterValuesType, todoListId: string) => {
+     const todoList = todoLists.find( t => t.id === todoListId)
+    if(todoList) {
+      todoList.filter = value
+      setTodoLists([...todoLists])
+    }
   }
 
   const changeCheckStatus = (taskId: string, isDone: boolean) => {
@@ -52,19 +65,24 @@ function App() {
     setTask([...task])
   }
 
-  let taskForTodo = task
-  if (filter === 'completed') {
-    taskForTodo = task.filter(t => t.isDone === true)
-  }
-  if (filter === 'active') {
-    taskForTodo = task.filter(t => t.isDone === false)
-  }
+ 
 
   return (
     <div className="App">
-      <Todo title="what to learn?"
-       tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus} filter={filter}
-        />
+      {todoLists.map((todo) => {
+         let taskForTodo = task
+         if (todo.filter === 'completed') {
+           taskForTodo = task.filter(t => t.isDone === true)
+         }
+         if (todo.filter === 'active') {
+           taskForTodo = task.filter(t => t.isDone === false)
+         }
+        return <Todo title={todo.title}
+        key={todo.id} id={todo.id}
+        tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus} filter={todo.filter}
+         />
+      })}
+      
     </div>
   );
 }

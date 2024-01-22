@@ -10,10 +10,11 @@ export type TaskType = {
 }
 
 type PropsType = {
+  id: string
   title: string
   tasks: Array<TaskType>
   removeTodo: (id: string) => void
-  changeFilter: (value: FilterValuesType) => void
+  changeFilter: (value: FilterValuesType, todoListId: string) => void
   addTodo: (input: string) => void
   changeCheckStatus: (taskId: string, isDone: boolean) => void
   filter: FilterValuesType
@@ -69,9 +70,9 @@ export function Todo(props: PropsType) {
 
       </ul>
       <div>
-        <button className={props.filter == 'all' ? "active-filter" : ""} onClick={() => props.changeFilter('all')}>All</button>
-        <button className={props.filter == 'active' ? "active-filter" : ""} onClick={() => props.changeFilter('active')}>Active</button>
-        <button className={props.filter == 'completed' ? "active-filter" : ""} onClick={() => props.changeFilter('completed')}>Completed</button>
+        <button className={props.filter == 'all' ? "active-filter" : ""} onClick={() => props.changeFilter('all', props.id)}>All</button>
+        <button className={props.filter == 'active' ? "active-filter" : ""} onClick={() => props.changeFilter('active', props.id)}>Active</button>
+        <button className={props.filter == 'completed' ? "active-filter" : ""} onClick={() => props.changeFilter('completed', props.id)}>Completed</button>
       </div>
     </div>
   )
