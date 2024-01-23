@@ -68,7 +68,7 @@ function App() {
   }
   const removeTodo = (id: string, todoListId: string) => {
     const newTask = task[todoListId]
-    const filterTask = newTask.filter(prev => prev.id !== todoListId)
+    const filterTask = newTask.filter(prev => prev.id != id)
     task[todoListId] = filterTask
     setTask({...task})
   }
