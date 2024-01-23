@@ -5,7 +5,7 @@ import { FilterValuesType } from "../App"
 
 export type TaskType = {
   id: string
-  text: string
+  title: string
   isDone: boolean
 }
 
@@ -13,10 +13,10 @@ type PropsType = {
   id: string
   title: string
   tasks: Array<TaskType>
-  removeTodo: (id: string) => void
+  removeTodo: (id: string, todoListId: string) => void
   changeFilter: (value: FilterValuesType, todoListId: string) => void
-  addTodo: (input: string) => void
-  changeCheckStatus: (taskId: string, isDone: boolean) => void
+  addTodo: (input: string, todoListId: string) => void
+  changeCheckStatus: (taskId: string, isDone: boolean, todoListId: string) => void
   filter: FilterValuesType
 }
 
@@ -31,7 +31,7 @@ export function Todo(props: PropsType) {
 
   const addTask = () => {
     if(input.trim() !== "") {
-      props.addTodo(input.trim())
+      props.addTodo(input.trim(), props.id)
       setInput('')
     } else {
       setError('Field is required')
@@ -57,12 +57,12 @@ export function Todo(props: PropsType) {
       <ul>
         {props.tasks.map(t => {
             const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-              props.changeCheckStatus(t.id, e.target.checked)
+              props.changeCheckStatus(t.id, e.target.checked, props.id)
             }
           return <li key={t.id} className={t.isDone ? "is-done" : ''} >
           <input type="checkbox" checked={t.isDone} onChange={onChangeCheckboxHandler} />
-          <span>{t.text}</span>
-          <button onClick={() => { props.removeTodo(t.id) }}>x</button>
+          <span>{t.title}</span>
+          <button onClick={() => { props.removeTodo(t.id, props.id) }}>x</button>
         </li>
         }
           
