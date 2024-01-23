@@ -18,6 +18,7 @@ type PropsType = {
   addTodo: (input: string, todoListId: string) => void
   changeCheckStatus: (taskId: string, isDone: boolean, todoListId: string) => void
   filter: FilterValuesType
+  removeTodoList: (id:string) => void
 }
 
 
@@ -46,14 +47,18 @@ export function Todo(props: PropsType) {
     // inputElement?.classList.remove('error-input')
   }
 
+  const removeTodoList = () => {
+    props.removeTodoList(props.id)
+  }
+
 
 
   return (
     <div>
+      <h3>{props.title} <button onClick={removeTodoList}>x</button></h3>
       <input id="text-input" className={error ? "error-input" : ""} type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
       <button onClick={() => addTask()}>+</button>
       {error && <div className="text-input">{error}</div>}
-      <h3>{props.title}</h3>
       <ul>
         {props.tasks.map(t => {
             const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
