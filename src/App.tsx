@@ -68,7 +68,7 @@ function App() {
   }
   const removeTodo = (id: string, todoListId: string) => {
     const newTask = task[todoListId]
-    const filterTask = newTask.filter(prev => prev.id !== todoListId)
+    const filterTask = newTask.filter(prev => prev.id != id)
     task[todoListId] = filterTask
     setTask({...task})
   }
@@ -90,7 +90,13 @@ function App() {
     }
     
   }
-
+  
+  const removeTodoList = (id: string) => {
+    const filterTodoList = todoLists.filter(t => t.id !== id)
+    setTodoLists(filterTodoList)
+    // delete task[id]
+    // setTask({...task})
+  }
 
 
   return (
@@ -104,7 +110,7 @@ function App() {
           taskForTodo = taskForTodo.filter(t => t.isDone === false)
         }
         return <Todo title={todo.title}
-          key={todo.id} id={todo.id}
+          key={todo.id} id={todo.id} removeTodoList={removeTodoList}
           tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus} filter={todo.filter}
         />
       })}
