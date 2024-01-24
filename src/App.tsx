@@ -40,8 +40,8 @@ function App() {
 
 
   const [todoLists, setTodoLists] = useState<Array<todoListsType>>([
-    { id: todoListId1, title: 'What to learn', filter: 'active' },
-    { id: todoListId2, title: 'What to buy', filter: 'active' }
+    { id: todoListId1, title: 'What to learn', filter: 'all' },
+    { id: todoListId2, title: 'What to buy', filter: 'all' }
   ])
 
 
