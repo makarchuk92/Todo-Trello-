@@ -13,16 +13,16 @@ type todoListsType = {
   filter: FilterValuesType
 }
 
+type TaskStateType = {
+  [key: string]: Array<TaskType>
+}
+
 function App() {
-  // const todos = [
-  //   { id: v1(), text: 'test1', isDone: true },
-  //   { id: v1(), text: 'test2', isDone: false },
-  //   { id: v1(), text: 'test3', isDone: true }
-  // ]
+
   const todoListId1 = v1()
   const todoListId2 = v1()
 
-  const [task, setTask] = useState({
+  const [task, setTask] = useState<TaskStateType>({
     [todoListId1]: [
       { id: v1(), title: 'test1', isDone: true },
       { id: v1(), title: 'test2', isDone: false },
@@ -36,16 +36,11 @@ function App() {
   }
   )
 
-  // const [task, setTask] = useState<Array<TaskType>>(todos)
-
-
 
   const [todoLists, setTodoLists] = useState<Array<todoListsType>>([
     { id: todoListId1, title: 'What to learn', filter: 'all' },
     { id: todoListId2, title: 'What to buy', filter: 'all' }
   ])
-
-
 
 
   const addTodo = (title: string, todoListId: string) => {
@@ -60,13 +55,9 @@ function App() {
     task[todoListId] = newTodos
 
     setTask({...task})
-    //else{
-    //   const element: HTMLElement | null = document.getElementById('text-input')
-    //   element?.classList.add('error-input')
-    // }
-
 
   }
+
   const removeTodo = (id: string, todoListId: string) => {
     const newTask = task[todoListId]
     const filterTask = newTask.filter(prev => prev.id != id)
@@ -88,15 +79,12 @@ function App() {
     if (newTasks) {
       newTasks.isDone = isDone
       setTask({...task})
-    }
-    
+    } 
   }
   
   const removeTodoList = (id: string) => {
     const filterTodoList = todoLists.filter(t => t.id !== id)
     setTodoLists(filterTodoList)
-    // delete task[id]
-    // setTask({...task})
   }
 
   const addTodoList = (title: string) => {
