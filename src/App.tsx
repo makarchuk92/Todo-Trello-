@@ -3,6 +3,7 @@ import './App.css';
 import { TaskType, Todo } from './Components/Todo';
 import { v1 } from 'uuid';
 import AddItemForm from './Components/AddItemForm';
+import TodoList from './Components/TodoList/TodoList';
 
 
 
@@ -87,6 +88,14 @@ function App() {
     setTodoLists(filterTodoList)
   }
 
+  const changeTodoListTitle = (id: string, newTitle: string) => {
+    const todoList = todoLists.find(t => t.id === id)
+    if(todoList) {
+      todoList.title = newTitle
+      setTodoLists([...todoLists])
+    }
+  }
+
   const addTodoList = (title: string) => {
     const newTodoList: todoListsType = {
       id: v1(),
@@ -95,6 +104,15 @@ function App() {
     }
     setTodoLists([newTodoList, ...todoLists])
     setTask({...task, [newTodoList.id]: []})
+  }
+
+  const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
+    const newTask = task[todoListId]
+    const newTasks = newTask.find(t => t.id === taskId)
+    if (newTasks) {
+      newTasks.title = newTitle
+      setTask({...task})
+    } 
   }
 
 
@@ -110,7 +128,7 @@ function App() {
           taskForTodo = taskForTodo.filter(t => t.isDone === false)
         }
         return <Todo title={todo.title}
-          key={todo.id} id={todo.id} removeTodoList={removeTodoList}
+          key={todo.id} id={todo.id} removeTodoList={removeTodoList} changeTaskTitle={changeTaskTitle} changeTodoListTitle={changeTodoListTitle}
           tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus} filter={todo.filter}
         />
       })}
