@@ -2,6 +2,9 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { FilterValuesType } from "../App"
 import AddItemForm from "./AddItemForm"
 import EditTableSpan from "./EditTableSpan"
+import { IconButton } from "@mui/material"
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 
@@ -45,8 +48,12 @@ export function Todo(props: PropsType) {
 
   return (
     <div>
-      <h3> <EditTableSpan title={props.title} onChangeView={changeTodoListTitle}/> <button onClick={removeTodoList}>x</button></h3>
-      <AddItemForm addItem={addNewTodo} />
+      <h3> <EditTableSpan title={props.title} onChangeView={changeTodoListTitle} /> 
+        <IconButton aria-label="delete" size="small" onClick={removeTodoList}>
+          <DeleteIcon fontSize="small"/>
+        </IconButton>
+        <AddItemForm addItem={addNewTodo} />
+      </h3>
       <ul>
         {props.tasks.map(t => {
           const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,8 +65,10 @@ export function Todo(props: PropsType) {
           }
           return <li key={t.id} className={t.isDone ? "is-done" : ''} >
             <input type="checkbox" checked={t.isDone} onChange={onChangeCheckboxHandler} />
-            <EditTableSpan title={t.title} onChangeView={onChangeView}/>
-            <button onClick={() => { props.removeTodo(t.id, props.id) }}>x</button>
+            <EditTableSpan title={t.title} onChangeView={onChangeView} />
+            <IconButton aria-label="delete" onClick={() => { props.removeTodo(t.id, props.id) }} >
+              <DeleteIcon fontSize="small" className="color_white"/>
+            </IconButton>
           </li>
         }
 

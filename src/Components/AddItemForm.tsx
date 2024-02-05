@@ -1,3 +1,4 @@
+import { Button, TextField, colors } from '@mui/material'
 import React, { ChangeEvent, useState } from 'react'
 
 export type AddItemFormPropsType = {
@@ -27,9 +28,8 @@ export type AddItemFormPropsType = {
   
     return (
       <div>
-        <input id="text-input" className={error ? "error-input" : ""} type="text" placeholder="What title?" value={input} onChange={onChangeInputHandler} />
-        <button onClick={() => addTask()}>+</button>
-        {error && <div className="text-input">{error}</div>}
+        <TextField id="standard-basic" label="Type value" variant="standard" error={!!error} helperText={error} value={input} onChange={onChangeInputHandler} />
+        <Button onClick={addTask} variant="contained" size='small' className='btn__addClick'>+</Button>
       </div>
     )
   

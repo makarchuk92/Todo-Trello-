@@ -1,4 +1,10 @@
+body {
+  margin: 0;
+}
+
 .App {
+  background: #8262d4;
+  height: 100vh;
   padding: 30px;
   display: flex;
 }
@@ -18,3 +24,18 @@
   border-radius: 5px;
   margin-bottom: 1rem;
 }
+
+.btn__addClick {
+  background-color: #3f208f!important;
+}
+
+.active-filter {
+  background-color: #3f208f; 
+  color: white;
+  border-color: #3f208f7a;
+}
+
+.is-done {
+  opacity: 50%;
+}
+
