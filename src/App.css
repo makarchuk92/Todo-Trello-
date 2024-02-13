@@ -2,16 +2,13 @@ body {
   margin: 0;
 }
 
-.App {
+ .App {
   background: #8262d4;
   height: 100vh;
-  padding: 30px;
-  display: flex;
+
 }
 
-.App>div {
-  margin-left: 50px;
-}
+/*
 
 
 .Task {
@@ -37,5 +34,5 @@ body {
 
 .is-done {
   opacity: 50%;
-}
+} */
 
