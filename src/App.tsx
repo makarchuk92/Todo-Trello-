@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { TaskType, Todo } from './Components/Todo';
 import { v1 } from 'uuid';
@@ -25,6 +25,25 @@ function App() {
   const todoListId1 = v1()
   const todoListId2 = v1()
 
+  // const [task, setTask] = useState<TaskStateType>({
+  //   [todoListId1]: [
+  //     { id: v1(), title: 'test1', isDone: true },
+  //     { id: v1(), title: 'test2', isDone: false },
+  //     { id: v1(), title: 'test3', isDone: true }
+  //   ],
+  //   [todoListId2]: [
+  //     { id: v1(), title: 'test4', isDone: true },
+  //     { id: v1(), title: 'test5', isDone: false },
+  //     { id: v1(), title: 'test6', isDone: true }
+  //   ]
+  // }
+  // )
+
+
+
+
+
+
   const [task, setTask] = useState<TaskStateType>({
     [todoListId1]: [
       { id: v1(), title: 'test1', isDone: true },
@@ -44,6 +63,7 @@ function App() {
     { id: todoListId1, title: 'What to learn', filter: 'all' },
     { id: todoListId2, title: 'What to buy', filter: 'all' }
   ])
+
 
 
   const addTodo = (title: string, todoListId: string) => {
@@ -121,7 +141,7 @@ function App() {
   return (
     <div className="App">
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" >
+        <AppBar position="static" className='bg'>
           <Toolbar>
             <IconButton
               size="large"
@@ -153,7 +173,7 @@ function App() {
               taskForTodo = taskForTodo.filter(t => t.isDone === false)
             }
             return <Grid item>
-              <Paper elevation={2} style={{padding: "10px"}}>
+              <Paper elevation={2} style={{padding: "10px"}}> 
                 <Todo title={todo.title}
                   key={todo.id} id={todo.id} removeTodoList={removeTodoList} changeTaskTitle={changeTaskTitle} changeTodoListTitle={changeTodoListTitle}
                   tasks={taskForTodo} removeTodo={removeTodo} changeFilter={changeFilter} addTodo={addTodo} changeCheckStatus={changeCheckStatus} filter={todo.filter}

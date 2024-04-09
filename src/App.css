@@ -3,9 +3,13 @@ body {
 }
 
  .App {
-  background: #8262d4;
+  background: #65d1c3;
   height: 100vh;
 
+}
+
+.bg {
+  background: #65d1c3 !important;
 }
 
 /*
